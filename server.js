@@ -9,3 +9,9 @@ app.listen(PORT, () => console.log(`Server started on port: ${PORT}`));
 app.get('/', (req, res) =>
   res.json({ msg: 'Welcome to the ContactKeep Api...' })
 );
+
+/* Define Routes */
+
+app.use('/api/users', require('./routes/users'));
+app.use('/api/contacts', require('./routes/contacts'));
+app.use('/api/auth', require('./routes/auth'));
