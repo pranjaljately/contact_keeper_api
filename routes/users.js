@@ -45,8 +45,8 @@ router.post(
         password,
       });
 
-      const salt = await bycrypt.genSalt(10);
-      user.password = await bycrypt.hash(password, salt);
+      // Auto-gen a salt and hash
+      user.password = await bycrypt.hash(password, 10);
 
       await user.save();
 
