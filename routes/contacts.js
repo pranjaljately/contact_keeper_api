@@ -70,8 +70,44 @@ router.post(
  * @description Update contact
  * @access Private
  */
-router.put('/:id', auth, (req, res) => {
-  res.send('Update contact');
+router.put('/:id', auth, async (req, res) => {
+  const { name, email, phone, type } = req.body;
+
+  //Build contact object
+  const contactFields = {};
+
+  if (name) contactFields.name = name;
+  if (email) contactFields.email = name;
+  if (phone) contactFields.phone = name;
+  if (type) contactFields.type = name;
+
+  try {
+    let contact = await Contact.findById(req.params.id);
+
+    if (!contact) {
+      return res.status(404).json({ msg: 'Contact not found' });
+    }
+
+    // Make sure user owns contact
+    if (contact.user.toString() !== req.user.id) {
+      return res.status(401).json({ msg: 'Not authorised' });
+    }
+
+    /**
+     * Could do - Contact.findByIdAndUpdate(req.params.id, { $set: contactFields }, { new: true });
+     * The $set operator replaces the value of a field with the specified value.
+     * By default, if you don't include any update operators in doc, Mongoose will wrap doc in $set for you.
+     * new: bool - true to return the modified document rather than the original. defaults to false
+     */
+    contact = await Contact.findByIdAndUpdate(req.params.id, contactFields, {
+      new: true,
+    });
+
+    res.json(contact);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ msg: 'Server error.' });
+  }
 });
 
 /**
