@@ -1,13 +1,25 @@
 const express = require('express');
 const router = express.Router();
+const User = require('../models/User');
+const Contact = require('../models/Contact');
+const auth = require('../middleware/auth');
+const { check, validationResult } = require('express-validator');
 
 /**
  * @route GET api/contacts
  * @description Get all contacts for user
  * @access Private
  */
-router.get('/', (req, res) => {
-  res.send('Get all contacts for user');
+router.get('/', auth, async (req, res) => {
+  try {
+    const contacts = await Contact.find({ user: req.user.id }).sort({
+      date: 'desc',
+    });
+    res.json(contacts);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('Server error');
+  }
 });
 
 /**
@@ -15,7 +27,7 @@ router.get('/', (req, res) => {
  * @description Add new contact
  * @access Private
  */
-router.post('/', (req, res) => {
+router.post('/', auth, (req, res) => {
   res.send('Add new contact');
 });
 
@@ -24,7 +36,7 @@ router.post('/', (req, res) => {
  * @description Update contact
  * @access Private
  */
-router.put('/:id', (req, res) => {
+router.put('/:id', auth, (req, res) => {
   res.send('Update contact');
 });
 
@@ -33,7 +45,7 @@ router.put('/:id', (req, res) => {
  * @description Delete contact
  * @access Private
  */
-router.delete('/:id', (req, res) => {
+router.delete('/:id', auth, (req, res) => {
   res.send('Update contact');
 });
 
