@@ -90,6 +90,10 @@ img {
   text-align: left;
 }
 
+.capitalize {
+  text-transform: capitalize;
+}
+
 /* Cards */
 .card {
   padding: 1rem;
