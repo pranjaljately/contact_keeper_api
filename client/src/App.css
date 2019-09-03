@@ -459,5 +459,5 @@ table th {
 }
 .item-exit-active {
   opacity: 0;
-  transition: opacity 1000 ease-in;
+  transition: opacity 500 ease-in;
 }
