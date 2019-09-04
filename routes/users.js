@@ -36,7 +36,7 @@ router.post(
       let user = await User.findOne({ email });
 
       if (user) {
-        return res.status(422).json({ msg: 'Email already in use.' });
+        return res.status(422).json({ msg: 'Email already in use' });
       }
 
       user = new User({
@@ -45,7 +45,9 @@ router.post(
         password,
       });
 
-      // Auto-gen a salt and hash
+      //const salt = await bycrypt.salt(10);
+
+      // Auto-gen a salt and hash - or put salt constant where 10 is...
       user.password = await bycrypt.hash(password, 10);
 
       await user.save();
@@ -64,12 +66,12 @@ router.post(
         },
         (err, token) => {
           if (err) throw err;
-          res.json(token);
+          res.json({ token });
         }
       );
     } catch (error) {
       console.error(error.message);
-      res.status(500).json({ msg: 'Server error.' });
+      res.status(500).send('Server error.');
     }
   }
 );
