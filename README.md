@@ -1,6 +1,6 @@
 # Contact Keeper
 
-> A full stack contact manager created using MongoDB, Express, React and Node.js  Part of the "Modern React Front To Back" Udemy course.
+> A full stack contact manager created using MongoDB, Express, React and Node.js. Part of the "Modern React Front To Back" Udemy course.
 
 ## Usage
 
