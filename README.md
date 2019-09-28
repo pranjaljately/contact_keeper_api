@@ -8,7 +8,7 @@ Install dependencies
 
 ```bash
 npm install
-npm run clientInstall
+cd client && npm install
 ```
 
 ### Mongo connection setup
